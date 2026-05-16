@@ -8,6 +8,7 @@ from commands.improve import improve
 from commands.improve_all import improve_all
 from commands.summary import summary
 from commands.manage import use_paper, new_paper, list_papers_cmd
+from commands.generate_tests import generate_tests
 
 
 @click.group()
@@ -26,6 +27,7 @@ cli.add_command(summary)
 cli.add_command(use_paper)
 cli.add_command(new_paper)
 cli.add_command(list_papers_cmd)
+cli.add_command(generate_tests)
 
 if __name__ == "__main__":
     cli()

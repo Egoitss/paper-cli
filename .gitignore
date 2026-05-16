@@ -20,6 +20,9 @@ env/
 # All paper projects (content, data, output — nothing personal tracked)
 papers/
 
+# Generated test file (re-created by `generate-tests` command)
+tests/test_generated_bibliography.py
+
 # Active paper pointer (machine-local)
 .active_paper
 
