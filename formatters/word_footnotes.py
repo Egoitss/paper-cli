@@ -4,7 +4,7 @@ Word footnote support for python-docx via direct XML manipulation.
 Creates a footnotes.xml part, registers it with the document, and provides
 an API to insert footnote references into paragraphs.
 
-Footnote format per Juridical College rules:
+Footnote format:
   - 10pt Times New Roman, single spacing, left aligned
   - Separated from body by a short line (Word handles this automatically)
   - Sequential numbering throughout the document

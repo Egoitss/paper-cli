@@ -2,7 +2,7 @@ from __future__ import annotations
 
 EN_DASH = "–"
 
-# Section order per Juridical College Appendix 3:
+# Section order for bibliography:
 # legislation → books → articles → internet resources → court practice → other
 _SECTION_SUBTYPE_ORDER: dict[str, int] = {
     "legislation": 0,
@@ -20,7 +20,7 @@ _LEGISLATION_ORDER = [
 ]
 
 
-# ── Per-subtype format functions (Juridical College Appendix 3) ──────────────
+# ── Per-subtype format functions ─────────────────────────────────────────────
 
 def format_legislation(
     title: str,
@@ -192,7 +192,7 @@ def format_source(source: dict) -> str:
         author_count = len(authors) if authors else (1 if author else 0)
         initial = source.get("initial", "")
         if author_count >= 4:
-            # 4+ authors: initial before surname per Appendix 3
+            # 4+ authors: initial placed before surname
             return format_book_4_plus(
                 title, initial, author, city, publisher, year, pages, page_unit
             )
@@ -213,7 +213,7 @@ def format_source(source: dict) -> str:
     return format_internet(author, initial, title, url, accessed or "")
 
 
-# ── Sorting: legislation block first, then sections in Appendix 3 order ─────
+# ── Sorting: legislation block first, then by source type ────────────────────
 
 def sort_bibliography(sources: list[dict]) -> list[dict]:
     legislation = [s for s in sources if s.get("source_subtype") == "legislation"]

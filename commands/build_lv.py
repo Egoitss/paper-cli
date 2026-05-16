@@ -26,7 +26,7 @@ SECTION_HEADINGS_LV = {
 }
 
 LV = {
-    "institution": "JURIDISKĀ KOLEDŽA",
+    "institution": config.INSTITUTION_LV,
     "doc_type": "ZIŅOJUMS",
     "author_label": "Autors: _________________________ [vārds, uzvārds, grupas kods]",
     "supervisor_label": "Zinātniskais vadītājs: _______________ [grāds, vārds, uzvārds]",

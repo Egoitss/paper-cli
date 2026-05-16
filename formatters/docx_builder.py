@@ -33,7 +33,7 @@ def _add_page_numbers(section) -> None:
 
 
 def _apply_page_setup(doc: Document) -> None:
-    # Applies A4 dimensions and Juridical College margins from STYLES constants
+    # Applies A4 dimensions and margins defined in STYLES constants
     s = doc.sections[0]
     s.page_width = STYLES["page"]["width"]
     s.page_height = STYLES["page"]["height"]
@@ -138,7 +138,7 @@ def _add_toc_placeholder(doc: Document) -> None:
 
 
 def _add_abbreviations(doc: Document, abbreviations: list[str]) -> None:
-    # Only included when the paper has 7+ distinct abbreviations (Juridical College rule)
+    # Only included when the paper has 7+ distinct abbreviations
     _add_chapter_heading(doc, "LIST OF ABBREVIATIONS")
     for abbr in abbreviations:
         _add_body_paragraph(doc, f"{abbr} — [expand abbreviation]")
@@ -198,11 +198,11 @@ def _add_abstract_placeholder(doc: Document) -> None:
 def _add_originality_declaration(doc: Document) -> None:
     doc.add_page_break()
     _add_chapter_heading(doc, "ORIGINALITY DECLARATION")
-    _add_body_paragraph(doc, "Riga, ___ __________ 2026")
+    _add_body_paragraph(doc, "[City], ___ __________ 2026")
     _add_body_paragraph(
         doc,
         "I hereby certify with my signature that the qualification paper submitted "
-        "to the Juridical College is an original work and is not plagiarism."
+        f"to {config.INSTITUTION or 'the institution'} is an original work and is not plagiarism."
     )
     _add_body_paragraph(doc, "Author: _________________ [name, surname]")
     _add_body_paragraph(doc, "Signature: ______________")

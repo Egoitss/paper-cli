@@ -45,7 +45,7 @@ def _load_intro_text() -> str:
 
 
 def _make_fn_text_en(src: dict | None, page_ref: str) -> str:
-    """Format a Juridical College Appendix 3 footnote with the specific cited page."""
+    """Format a footnote with the specific cited page per institution bibliography rules."""
     from formatters.bibliography import (
         format_article, format_article_4_plus,
         format_internet, format_legislation, format_court, EN_DASH,
