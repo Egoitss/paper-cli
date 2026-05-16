@@ -36,12 +36,12 @@ def test_format_legislation_no_adopted_date():
 
 def test_format_book_1_to_3():
     result = format_book_1_to_3(
-        surname="Osipova", initial="S",
-        title="Nation, Language, Constitutional State",
-        city="Riga", publisher="Court House Agency",
+        surname="Lastname", initial="A",
+        title="Sample Book Title",
+        city="Riga", publisher="Sample Publisher",
         year=2020, pages=559,
     )
-    assert result == "Osipova S. Nation, Language, Constitutional State.– Riga: Court House Agency, 2020, 559 lpp."
+    assert result == "Lastname A. Sample Book Title.– Riga: Sample Publisher, 2020, 559 lpp."
 
 
 def test_format_book_1_to_3_custom_page_unit():
@@ -76,15 +76,15 @@ def test_format_article():
 
 def test_format_article_4_plus():
     result = format_article_4_plus(
-        article_title="Fairness and Bias in Algorithmic Hiring",
-        surname="Fabris", initial="A",
-        journal="ACM Transactions on Intelligent Systems and Technology",
+        article_title="Sample Article Title",
+        surname="Lastname", initial="A",
+        journal="Sample Academic Journal",
         issue="Vol. 15", year=2024,
         pages="1.–50. lpp.",
     )
     assert result == (
-        "Fairness and Bias in Algorithmic Hiring/ Fabris A. u. c.//"
-        " ACM Transactions on Intelligent Systems and Technology, Vol. 15, 2024, 1.–50. lpp.."
+        "Sample Article Title/ Lastname A. u. c.//"
+        " Sample Academic Journal, Vol. 15, 2024, 1.–50. lpp.."
     )
 
 
