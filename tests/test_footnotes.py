@@ -8,7 +8,7 @@ from formatters.footnotes import (
 
 
 def test_extract_citations_finds_markers():
-    text = "AI is growing {{cite:src_001:p.12}} rapidly {{cite:src_002:p.45}}."
+    text = "The topic is relevant {{cite:src_001:p.12}} in practice {{cite:src_002:p.45}}."
     citations = extract_citations(text)
     assert len(citations) == 2
     assert citations[0] == {"source_id": "src_001", "page": "p.12", "marker": "{{cite:src_001:p.12}}"}

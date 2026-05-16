@@ -47,31 +47,31 @@ def test_format_book_1_to_3():
 def test_format_book_1_to_3_custom_page_unit():
     result = format_book_1_to_3(
         surname="Smith", initial="J",
-        title="AI Research",
+        title="Sample Book Title Two",
         city="London", publisher="Pub",
         year=2021, pages=300, page_unit="pp.",
     )
-    assert result == "Smith J. AI Research.– London: Pub, 2021, 300 pp."
+    assert result == "Smith J. Sample Book Title Two.– London: Pub, 2021, 300 pp."
 
 
 def test_format_book_4_plus():
     result = format_book_4_plus(
-        title="Marketing",
-        initial="P", surname="Baines",
-        city="Oxford", publisher="Oxford University Press",
+        title="Sample Textbook",
+        initial="P", surname="Lastname",
+        city="London", publisher="Sample University Press",
         year=2019, pages=738,
     )
-    assert result == "Marketing/ Baines P. u. c.– Oxford: Oxford University Press, 2019, 738 lpp."
+    assert result == "Sample Textbook/ Lastname P. u. c.– London: Sample University Press, 2019, 738 lpp."
 
 
 def test_format_article():
     result = format_article(
         surname="Smith", initial="A",
-        article_title="AI in Talent Acquisition",
-        journal="Journal of HR Management",
+        article_title="Sample Article Title",
+        journal="Sample Journal",
         issue="Nr. 3", year=2022, pages="45.–67. lpp.",
     )
-    assert result == "Smith A. AI in Talent Acquisition// Journal of HR Management, Nr. 3, 2022, 45.–67. lpp.."
+    assert result == "Smith A. Sample Article Title// Sample Journal, Nr. 3, 2022, 45.–67. lpp.."
 
 
 def test_format_article_4_plus():
@@ -91,13 +91,13 @@ def test_format_article_4_plus():
 def test_format_internet_with_author():
     result = format_internet(
         surname="Brown", initial="J",
-        title="How AI is Changing Recruitment",
-        url="https://example.com/ai-recruitment/",
+        title="Sample Internet Article",
+        url="https://example.com/article/",
         accessed="15.03.2026.",
     )
     assert result == (
-        "Brown J. How AI is Changing Recruitment."
-        "– https://example.com/ai-recruitment/."
+        "Brown J. Sample Internet Article."
+        "– https://example.com/article/."
         "– (Sk. 15.03.2026.)."
     )
 
@@ -105,25 +105,25 @@ def test_format_internet_with_author():
 def test_format_internet_without_author():
     result = format_internet(
         surname="", initial="",
-        title="EU AI Act Summary",
-        url="https://eur-lex.europa.eu/ai-act",
+        title="Sample Online Resource",
+        url="https://example.com/resource",
         accessed="10.04.2026.",
     )
-    assert result == "EU AI Act Summary.– https://eur-lex.europa.eu/ai-act.– (Sk. 10.04.2026.)."
+    assert result == "Sample Online Resource.– https://example.com/resource.– (Sk. 10.04.2026.)."
 
 
 def test_format_court():
     result = format_court(
         case_title="Doe v. Company",
         date="12.01.2023.",
-        court="Supreme Court Civil Department",
+        court="Sample Court Department",
         case_no="PAC-123/2023",
-        url="https://tiesas.lv/case/123",
+        url="https://example.com/case/123",
         accessed="01.04.2026.",
     )
     assert result == (
-        "Doe v. Company. 12.01.2023. Supreme Court Civil Department spriedums lietā Nr. PAC-123/2023."
-        "– https://tiesas.lv/case/123.– (Sk. 01.04.2026.)."
+        "Doe v. Company. 12.01.2023. Sample Court Department spriedums lietā Nr. PAC-123/2023."
+        "– https://example.com/case/123.– (Sk. 01.04.2026.)."
     )
 
 
@@ -148,9 +148,9 @@ def test_en_dash_in_separators():
 
 def test_sort_bibliography_latvian_before_foreign():
     sources = [
-        {"type": "scientific", "author": "Anderson", "title": "AI Study",
+        {"type": "scientific", "author": "Foreign", "title": "Sample Study",
          "source_subtype": "article", "language": "en"},
-        {"type": "scientific", "author": "Bērziņš", "title": "AI Pētījums",
+        {"type": "scientific", "author": "Local", "title": "Sample Pētījums",
          "source_subtype": "article", "language": "lv"},
     ]
     sorted_sources = sort_bibliography(sources)

@@ -66,7 +66,7 @@ def test_build_evaluate_prompt_contains_draft_and_task(tmp_data_dir):
 
 
 def test_build_research_prompt_contains_type_instruction(tmp_data_dir):
-    prompt = build_research_prompt("AI recruitment", "scientific", [])
+    prompt = build_research_prompt("sample topic", "scientific", [])
     assert "peer-reviewed" in prompt.lower()
     assert "JSON" in prompt
 

@@ -6,9 +6,9 @@ from commands.evaluate import EvalResult
 
 
 _DRAFT = (
-    "This is an academic draft about AI in HR. {{cite:src_001:p.12}} "
-    "AI transforms recruitment processes significantly. "
-    "In conclusion, AI offers substantial benefits."
+    "This is an academic draft about management. {{cite:src_001:p.12}} "
+    "Technology transforms organisational processes significantly. "
+    "In conclusion, adoption offers substantial benefits."
 )
 _PASS_RESULT = EvalResult(passed=True, failures=[], word_count=750)
 _FAIL_RESULT = EvalResult(

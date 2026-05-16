@@ -72,7 +72,10 @@ python3 cli.py build
 python3 cli.py improve --section <section-id>     # targeted rewrite of one section
 python3 cli.py improve-all                        # run improve over all drafted sections
 python3 cli.py summary                            # generate standalone summary_document.docx
+python3 cli.py generate-tests                     # generate bibliography formatter tests for active paper
 ```
+
+Run `generate-tests` after adding new sources via `research`. It writes `tests/test_generated_bibliography.py` with one test per source type present in the active paper — covering every formatter the project actually uses. Re-run any time sources change.
 
 ## Workflow
 

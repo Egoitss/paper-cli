@@ -9,8 +9,8 @@ from cli import cli
 
 def test_strip_cite_markers_removes_all_markers():
     from commands.summary import strip_cite_markers
-    text = "AI is growing {{cite:src_026:p.3}}. It affects HR {{cite:src_001:p.15}}."
-    assert strip_cite_markers(text) == "AI is growing . It affects HR ."
+    text = "The topic is growing {{cite:src_026:p.3}}. It affects work {{cite:src_001:p.15}}."
+    assert strip_cite_markers(text) == "The topic is growing . It affects work ."
 
 
 def test_strip_cite_markers_leaves_plain_text():
@@ -23,24 +23,24 @@ def test_strip_cite_markers_leaves_plain_text():
 def test_format_bib_entry_full_source():
     from commands.summary import format_bib_entry
     src = {
-        "author": "Tambe, Cappelli",
-        "title": "AI in HR",
-        "publisher": "California Management Review",
-        "year": 2019,
+        "author": "Lastname, Other",
+        "title": "Sample Book Title",
+        "publisher": "Sample Publisher",
+        "year": 2020,
         "url": "https://example.com",
     }
     result = format_bib_entry(src)
-    assert "Tambe, Cappelli." in result
-    assert "AI in HR." in result
-    assert "2019." in result
+    assert "Lastname, Other." in result
+    assert "Sample Book Title." in result
+    assert "2020." in result
     assert "https://example.com" in result
 
 
 def test_format_bib_entry_missing_author():
     from commands.summary import format_bib_entry
-    src = {"author": "", "title": "GDPR", "year": 2016, "publisher": "EU", "url": "https://gdpr.eu"}
+    src = {"author": "", "title": "Sample Regulation", "year": 2021, "publisher": "Sample Authority", "url": "https://example.com/reg"}
     result = format_bib_entry(src)
-    assert result.startswith("GDPR.")
+    assert result.startswith("Sample Regulation.")
 
 
 # --- get_intro_sources ---
@@ -49,7 +49,7 @@ def test_get_intro_sources_returns_cited_sources(tmp_data_dir, sample_sources):
     from core.source_manager import save_sources
     import config
     save_sources(sample_sources)
-    intro = "AI use is growing {{cite:src_001:p.3}}. GDPR applies {{cite:src_002:p.1}}."
+    intro = "Topic is relevant {{cite:src_001:p.3}}. Regulation applies {{cite:src_002:p.1}}."
     (config.CHAPTERS_DIR / "introduction.md").write_text(intro, encoding="utf-8")
 
     from commands.summary import get_intro_sources
@@ -89,15 +89,15 @@ def test_get_intro_sources_preserves_order(tmp_data_dir, sample_sources):
 def test_generate_summaries_parses_json_response(tmp_data_dir):
     import config
     (config.CHAPTERS_DIR / "chapter_1_1.md").write_text(
-        "This chapter examines AI history {{cite:src_001:p.1}}.", encoding="utf-8"
+        "This chapter examines the topic {{cite:src_001:p.1}}.", encoding="utf-8"
     )
-    api_response = json.dumps({"chapter_1_1": "AI evolved through several phases."})
+    api_response = json.dumps({"chapter_1_1": "The field evolved through several phases."})
 
     with patch("commands.summary.call", return_value=api_response):
         from commands.summary import generate_summaries
         result = generate_summaries(["chapter_1_1"])
 
-    assert result == {"chapter_1_1": "AI evolved through several phases."}
+    assert result == {"chapter_1_1": "The field evolved through several phases."}
 
 
 def test_generate_summaries_handles_markdown_wrapped_json(tmp_data_dir):
@@ -119,13 +119,13 @@ def test_build_summary_docx_contains_intro_text(tmp_data_dir, sample_sources):
     import config
     save_sources(sample_sources)
     (config.CHAPTERS_DIR / "introduction.md").write_text(
-        "AI is transforming HR. {{cite:src_001:p.1}}", encoding="utf-8"
+        "The topic is significant. {{cite:src_001:p.1}}", encoding="utf-8"
     )
 
     from commands.summary import build_summary_docx
     doc = build_summary_docx(summaries={}, sources=[])
     all_text = " ".join(p.text for p in doc.paragraphs)
-    assert "AI is transforming HR." in all_text
+    assert "The topic is significant." in all_text
 
 
 def test_build_summary_docx_chapter_headings_present(tmp_data_dir, sample_sources):
@@ -136,12 +136,12 @@ def test_build_summary_docx_chapter_headings_present(tmp_data_dir, sample_source
 
     from commands.summary import build_summary_docx
     doc = build_summary_docx(
-        summaries={"chapter_1_1": "AI evolved."},
+        summaries={"chapter_1_1": "A key finding."},
         sources=[],
     )
     all_text = " ".join(p.text for p in doc.paragraphs)
-    assert "1.1 AI IN MODERN HR" in all_text.upper()
-    assert "AI evolved." in all_text
+    assert config.SECTION_META["chapter_1_1"]["heading"].upper() in all_text.upper()
+    assert "A key finding." in all_text
 
 
 def test_build_summary_docx_name_only_for_undrafted(tmp_data_dir):
@@ -158,13 +158,13 @@ def test_build_summary_docx_name_only_for_undrafted(tmp_data_dir):
 def test_build_summary_docx_literature_section(tmp_data_dir):
     import config
     (config.CHAPTERS_DIR / "introduction.md").write_text("Intro.", encoding="utf-8")
-    src = {"author": "Tambe", "title": "AI in HR", "year": 2019, "publisher": "CMR", "url": "https://x.com"}
+    src = {"author": "Lastname", "title": "Sample Book Title", "year": 2020, "publisher": "Sample Publisher", "url": "https://example.com"}
 
     from commands.summary import build_summary_docx
     doc = build_summary_docx(summaries={}, sources=[src])
     all_text = " ".join(p.text for p in doc.paragraphs)
     assert "LITERATURE" in all_text.upper()
-    assert "Tambe." in all_text
+    assert "Lastname." in all_text
 
 
 # --- CLI integration ---
@@ -174,7 +174,7 @@ def test_summary_cli_creates_docx(tmp_data_dir, sample_sources, tmp_path):
     import config
     save_sources(sample_sources)
     (config.CHAPTERS_DIR / "introduction.md").write_text(
-        "AI is growing {{cite:src_001:p.3}}.", encoding="utf-8"
+        "The topic is relevant {{cite:src_001:p.3}}.", encoding="utf-8"
     )
     for sec in ["chapter_1_1", "chapter_1_2", "chapter_2_1", "chapter_2_2",
                 "chapter_3_1", "chapter_3_2", "chapter_4_1"]:
@@ -202,7 +202,7 @@ def test_generate_summaries_system_prompt_is_analytical(tmp_data_dir):
     def fake_call(system, user, mode):
         captured["system"] = system
         captured["user"] = user
-        return json.dumps({"chapter_1_1": "AI shaped HR through three technological waves."})
+        return json.dumps({"chapter_1_1": "The field evolved through three distinct phases."})
 
     with patch("commands.summary.call", side_effect=fake_call):
         from commands.summary import generate_summaries
@@ -219,7 +219,7 @@ def test_generate_summaries_user_prompt_says_synthesise(tmp_data_dir):
 
     def fake_call(system, user, mode):
         captured["user"] = user
-        return json.dumps({"chapter_1_1": "AI shaped HR."})
+        return json.dumps({"chapter_1_1": "The field developed."})
 
     with patch("commands.summary.call", side_effect=fake_call):
         from commands.summary import generate_summaries
