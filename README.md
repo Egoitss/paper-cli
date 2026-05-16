@@ -4,8 +4,23 @@ A CLI tool for writing, citing, and assembling academic qualification papers usi
 
 ## Requirements
 
-- Python 3.11+
-- An Anthropic API key
+| Requirement | Purpose | Notes |
+|---|---|---|
+| Python 3.11+ | Runtime | |
+| Anthropic API key | Writing, research, evaluation, summaries | Paid — billed per token |
+| Google Translate | Chapter translation to Latvian (`translate_sections.py`) | Free — no API key needed |
+
+All Python dependencies install via `pip install -r requirements.txt`:
+
+| Package | Used for |
+|---|---|
+| `anthropic` | Anthropic API client |
+| `click` | CLI commands |
+| `python-docx` | Word document assembly |
+| `python-dotenv` | Loading `.env` file |
+| `pyyaml` | Parsing `paper.yaml` |
+| `rich` | Terminal output formatting |
+| `deep-translator` | Google Translate (chapter translation) |
 
 ## Setup
 
