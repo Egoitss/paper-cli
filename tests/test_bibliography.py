@@ -14,24 +14,24 @@ from formatters.bibliography import (
 
 def test_format_legislation():
     result = format_legislation(
-        title="Latvijas Republikas Satversme",
-        adopted_date="15.02.1922.",
-        publication="Latvijas Vēstnesis",
-        pub_ref="Nr. 43",
-        pub_date="01.07.1993.",
+        title="Sample Legislation Title",
+        adopted_date="01.01.2020.",
+        publication="Sample Official Publication",
+        pub_ref="Nr. 1",
+        pub_date="01.01.2020.",
     )
-    assert result == "Latvijas Republikas Satversme (15.02.1922.)// Latvijas Vēstnesis, Nr. 43 (01.07.1993.)."
+    assert result == "Sample Legislation Title (01.01.2020.)// Sample Official Publication, Nr. 1 (01.01.2020.)."
 
 
 def test_format_legislation_no_adopted_date():
     result = format_legislation(
-        title="Regula (ES) 2016/679",
+        title="Sample Regulation Title",
         adopted_date="",
-        publication="Eiropas Savienības Oficiālais Vēstnesis",
-        pub_ref="L 119/1",
-        pub_date="04.05.2016.",
+        publication="Sample Official Journal",
+        pub_ref="L 1/1",
+        pub_date="01.01.2021.",
     )
-    assert result == "Regula (ES) 2016/679// Eiropas Savienības Oficiālais Vēstnesis, L 119/1 (04.05.2016.)."
+    assert result == "Sample Regulation Title// Sample Official Journal, L 1/1 (01.01.2021.)."
 
 
 def test_format_book_1_to_3():
